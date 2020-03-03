@@ -16,10 +16,11 @@ else
 	ip="${vpn_network}.${this_ip}"
 	cat /etc/wireguard/wg0-client.example.conf | \
 		sed -e "s/VPN_IP/${ip}/" | \
-		sed -e "s/PRIVKEY/${key}/" | \
-		sed -e "s/SERVER_PUBLIC/${server_public}/" | \
+		sed -e "s|PRIVKEY|${key}|" | \
+		sed -e "s|SERVER_PUBLIC|${server_public}|" | \
 		sed -e "s#ALLOWEDIPS#${vpn_network}.0/24, ${cust_network}#" | \
-		sed -e "s/SERVER/${server_addr}/" \
+		sed -e "s/SERVER/${server_addr}/" | \
+		sed -e "s/PORT/${port}/" \
 		> clients/$1/wg0.conf
 	echo "Created config!"
 	
